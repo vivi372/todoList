@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.todo.member.mapper.MemberMapper">
+	<select id="login" resultMap="memberDTO" parameterType="com.todo.member.model.MemberDTO">
+	  SELECT ID, NAME FROM MEMBER  
+	  WHERE ID=#{id} AND PW=#{pw} AND resign_yn = 'N'
+	</select>
+	
+	<select id="findId" resultType="String" parameterType="com.todo.member.model.MemberDTO">
+	  SELECT ID FROM MEMBER WHERE FIND_QUEST=#{findQuest} AND FIND_ANSW=#{findAnsw} AND resign_yn = 'N'
+	</select>
+	
+	<select id="findPw" resultType="int" parameterType="com.todo.member.model.MemberDTO">
+	  SELECT COUNT(PW) FROM MEMBER WHERE FIND_QUEST=#{findQuest} AND FIND_ANSW=#{findAnsw} AND ID=#{id} AND resign_yn = 'N'
+	</select>
+	
+	<update id="updatePw" parameterType="com.todo.member.model.MemberDTO">
+	  UPDATE MEMBER SET PW=#{pw} WHERE ID=#{id}
+	</update>
+	
+	<update id="reSignMember" parameterType="String">
+	  UPDATE MEMBER SET RESIGN_YN='Y' WHERE ID=#{id}
+	</update>
+
+    
+    
+	<resultMap type="com.todo.member.model.MemberDTO" id="memberDTO">
+	  <!-- 1:1로 DTO의 멤버변수를 매핑-->
+	  <result column="ID" property="id"/>
+	  <result column="PW" property="pw"/>
+	  <result column="NAME" property="name"/>
+	  <result column="FIND_QUEST" property="findQuest"/>
+	  <result column="FIND_ANSW" property="findAnsw"/>
+	  <result column="RESIGN_YN" property="resignYn"/>
+	</resultMap>
+</mapper>
