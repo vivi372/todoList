@@ -14,7 +14,10 @@ function App() {
       <main className='container'>
         <TodoRoutes />
       </main>
-      <Footer />
+      <Footer />      
+      <a href="#" className="scroll-top">
+          <i className="lni lni-chevron-up"></i>
+      </a>
     </Router>
   );
 }

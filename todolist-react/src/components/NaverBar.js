@@ -1,7 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+    const navigate = useNavigate();
+
   return (
     <header className="header navbar-area">
         <div className="container">
@@ -10,7 +12,7 @@ const Navbar = () => {
                     <div className="nav-inner">                        
                         <nav className="navbar navbar-expand-lg">
                             <Link className="navbar-brand" to="/">
-                                <img src="assets/images/logo/white-logo.svg" alt="Logo"/>
+                                <img src="%PUBLIC_URL%/assets/images/logo/white-logo.svg" alt="Logo"/>
                             </Link>
                             <button className="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -42,10 +44,8 @@ const Navbar = () => {
                                     </li>                                    
                                 </ul>
                             </div> 
-                            <div className="button">
-                                <Link to="/" className="btn">
-                                    Get started
-                                </Link>                                
+                            <div className="button" onClick={()=>navigate('/member/login')}>                                
+                                    <span className='btn'>Get started</span>                                                               
                             </div>
                         </nav>
                        
