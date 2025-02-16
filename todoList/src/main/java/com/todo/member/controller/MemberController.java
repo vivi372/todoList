@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +33,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(MemberDTO dto,HttpSession session) {
+	public ResponseEntity<MemberDTO> login(@RequestBody MemberDTO dto,HttpSession session) {
 		
 		log.info(dto.toString());
 		
@@ -42,16 +43,18 @@ public class MemberController {
 		if(loginDTO != null) {
 			//로그인 정보 넣기
 			session.setAttribute("login", loginDTO);			
-			return new ResponseEntity<String>("어서오세요 "+loginDTO.getName()+"님",HttpStatus.OK);			
+			return new ResponseEntity<>(loginDTO,HttpStatus.OK);			
 		} else {
 			//로그인 실패시
-			return new ResponseEntity<String>("틀린 비밀번호 입니다. 다시 입력해주세요",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
 		}
 		
 	}
 	
 	@PostMapping("/join")
-	public ResponseEntity<String> join(MemberDTO dto) {
+	public ResponseEntity<String> join(@RequestBody MemberDTO dto) {
+		log.info(dto.toString());
+		
 		//회원가입
 		int result = service.joinMember(dto);
 		//회원가입 성공시
@@ -65,7 +68,7 @@ public class MemberController {
 	}	
 	
 	@PostMapping("/findId")
-	public ResponseEntity<String> findId(MemberDTO dto) {
+	public ResponseEntity<String> findId(@RequestBody MemberDTO dto) {
 		//아이디 찾기
 		String id = service.findId(dto);
 		//아이디 찾기 성공시
@@ -79,7 +82,7 @@ public class MemberController {
 	}	
 	
 	@PostMapping("/findPw")
-	public ResponseEntity<String> findPw(MemberDTO dto) {
+	public ResponseEntity<String> findPw(@RequestBody MemberDTO dto) {
 		//비밀번호 찾기
 		int result = service.findPw(dto);
 		//비밀번호 찾기 성공시
@@ -93,7 +96,7 @@ public class MemberController {
 	}	
 	
 	@PostMapping("/updatePw")
-	public ResponseEntity<String> updatePw(MemberDTO dto) {
+	public ResponseEntity<String> updatePw(@RequestBody MemberDTO dto) {
 		//비밀번호 수정
 		int result = service.updatePw(dto);
 		//비밀번호 수정 성공시

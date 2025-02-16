@@ -9,6 +9,12 @@
 	  WHERE ID=#{id} AND PW=#{pw} AND resign_yn = 'N'
 	</select>
 	
+	<insert id="joinMember" parameterType="com.todo.member.model.MemberDTO">
+	  INSERT INTO MEMBER(ID,PW,NAME,FIND_QUEST,FIND_ANSW) 
+	  VALUES (#{id},#{pw},#{name},#{findQuest},#{findAnsw})
+
+	</insert>
+	
 	<select id="findId" resultType="String" parameterType="com.todo.member.model.MemberDTO">
 	  SELECT ID FROM MEMBER WHERE FIND_QUEST=#{findQuest} AND FIND_ANSW=#{findAnsw} AND resign_yn = 'N'
 	</select>
