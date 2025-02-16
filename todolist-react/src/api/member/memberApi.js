@@ -4,7 +4,7 @@ import { postRequest } from "../api";
 export const loginUser = async (id, password) => {
     const param = {
         id : id,
-        password : password
+        pw : password
     };
     try {
         return await postRequest("/member/login", param);
@@ -17,14 +17,15 @@ export const loginUser = async (id, password) => {
 export const joinUser = async (id, password,name,findQuest,findAnsw) => {
     const param = {
         id : id,
-        password : password,
+        pw : password,
         name : name,
         findQuest : findQuest,
         findAnsw : findAnsw,
     };
     try {
-        return await postRequest("/member/join", param);
+        await postRequest("/member/join", param);
+        return true
     } catch (error) {
-        return null;
+        return false;
     }
 };

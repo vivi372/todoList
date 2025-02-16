@@ -11,7 +11,7 @@ const Page = () => {
     const [id,setId] = useState('');
     const [password,setPassword] = useState('');
     const [name,setName] = useState('');
-    const [findQuest,setFindQuest] = useState('');
+    const [findQuest,setFindQuest] = useState('어릴 때 다녔던 초등학교 이름은?');
     const [findAnsw,setFindAnsw] = useState('');
     const navigate = useNavigate();
 
@@ -19,10 +19,13 @@ const Page = () => {
         e.preventDefault();
         const result = await loginUser(id,password);
         
+        console.log(result);
+
         //로그인 성공시
         if(result != null) {
             //세션에 데이터 저장
             setStorageUser(result);
+            alert(`어서오세요 ${result.name}님`);
             navigate('/');
         } else {
             alert("잘못된 로그인 정보입니다. 다시 입력해주세요.");
@@ -33,15 +36,20 @@ const Page = () => {
     const handleJoin = async (e) => {
         e.preventDefault();
         const result = await joinUser(id,password,name,findQuest,findAnsw);
-
-        //가입 성공시
-        if(result != null) {
+        
+        if(result) {
+            //가입 성공시
+            const user = await loginUser(id,password);
             //세션에 데이터 저장
-            setStorageUser(result);
+            setStorageUser(user);
+            alert(`어서오세요 ${user.name}님`);
             navigate('/');
+           
         } else {
+            //가입 실패시
             alert("잘못된 회원 정보입니다. 다시 입력해주세요.");
         }
+
     };
 
     return (
@@ -54,13 +62,13 @@ const Page = () => {
                         <input type="text" placeholder="이름" onChange={!isLogin ? (e)=>{setName(e.target.value)} : (e)=>{}}/>
                         <input type="text" placeholder="ID" onChange={!isLogin ? (e)=>{setId(e.target.value)} : (e)=>{}}/>
                         <input type="password" placeholder="Password" onChange={!isLogin ? (e)=>{setPassword(e.target.value)} : (e)=>{}}/>
-                        <select placeholder="계정 찾기 질문" onChange={!isLogin ? (e)=>{setFindQuest(e.target.value)} : (e)=>{}}>
-                            <option>어릴 때 다녔던 초등학교 이름은?</option>
-                            <option>가장 감명 깊게 읽었던 책의 제목은?</option>
-                            <option>첫 직장의 회사명은?</option>
-                            <option>어린 시절 별명은?</option>
-                            <option>아버지의 출생지는 어디인가요?</option>
-                            <option>첫 반려동물의 이름은?</option>
+                        <select placeholder="계정 찾기 질문" value={findQuest} onChange={!isLogin ? (e)=>{setFindQuest(e.target.value)} : (e)=>{}}>
+                            <option value="어릴 때 다녔던 초등학교 이름은?">어릴 때 다녔던 초등학교 이름은?</option>
+                            <option value="가장 감명 깊게 읽었던 책의 제목은?">가장 감명 깊게 읽었던 책의 제목은?</option>
+                            <option value="첫 직장의 회사명은?">첫 직장의 회사명은?</option>
+                            <option value="어린 시절 별명은?">어린 시절 별명은?</option>
+                            <option value="아버지의 출생지는 어디인가요?">아버지의 출생지는 어디인가요?</option>
+                            <option value="첫 반려동물의 이름은?">첫 반려동물의 이름은?</option>
                         </select>
                         <input type="text" placeholder="계정 찾기 답변" onChange={!isLogin ? (e)=>{setFindAnsw(e.target.value)} : (e)=>{}}/>
                         <button className='my-2'>가입하기</button>
