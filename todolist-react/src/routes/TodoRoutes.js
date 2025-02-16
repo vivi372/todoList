@@ -1,7 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/Page';
-import Login from '../pages/member/login/Page'
+import Login from '../pages/member/login/Page';
+import Find from '../pages/member/find/Page';
 
 
 const TodoRoutes = () => {
@@ -11,6 +12,7 @@ const TodoRoutes = () => {
       {/* /member 경로 아래 중첩 라우팅 */}
       <Route path="member">
           <Route path="login" element={<Login />} />  {/* /member/login */}          
+          <Route path="find" element={<Find />} />  {/* /member/find */}  
       </Route>
 
     </Routes>

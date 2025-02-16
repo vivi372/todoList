@@ -1,29 +1,16 @@
 
-/** {
-  box-sizing: border-box;
-}
 
-body {
-  background: #f6f5f7;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-family: 'Montserrat', sans-serif;
-  height: 100vh;
-  margin: -20px 0 50px;
-}*/
 
-#container h1 {
+#containerFind h1 {
   font-weight: bold;
   margin: 0;
 }
 
-#container h2 {
+#containerFind h2 {
   text-align: center;
 }
 
-#container p {
+#containerFind p {
   font-size: 14px;
   font-weight: 100;
   line-height: 20px;
@@ -31,18 +18,18 @@ body {
   margin: 20px 0 30px;
 }
 
-#container span {
+#containerFind span {
   font-size: 12px;
 }
 
-#container a {
+#containerFind a {
   color: #333;
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
 }
 
-#container button {
+#containerFind button {
   border-radius: 20px;
   border: 1px solid #6F42C1;
   background-color: #6F42C1;
@@ -55,23 +42,23 @@ body {
   transition: transform 80ms ease-in;
 }
 
-#container button:active {
+#containerFind button:active {
   transform: scale(0.95);
 }
 
-#container button:focus {
+#containerFind button:focus {
   outline: none;
 }
 
-#container button.ghost {
+#containerFind button.ghost {
   background-color: transparent;
   border-color: #FFFFFF;
 }
 
-#container form {
+#containerFind form {
   background-color: #FFFFFF;
   display: flex;
-  align-items: center;
+  /*align-items: center;*/
   justify-content: center;
   flex-direction: column;
   padding: 0 50px;
@@ -79,7 +66,7 @@ body {
   text-align: center;
 }
 
-#container input, #container select {
+#containerFind input, #containerFind select {
   background-color: #eee;
   border: none;
   padding: 12px 15px;
@@ -87,7 +74,7 @@ body {
   width: 100%;
 }
 
-#container.container {
+#containerFind.container {
   background-color: #fff;
   border-radius: 10px;
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
@@ -100,32 +87,30 @@ body {
   margin-top: 180px;
 }
 
-#container .form-container {
+#containerFind .form-container {
   position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
 }
 
-#container .sign-in-container {
+#containerFind .sign-in-container {
   left: 0;
-  width: 50%;
+  width: 100%;
   z-index: 2;
 }
 
-#container.container.right-panel-active .sign-in-container {
-  transform: translateX(100%);
-}
 
-#container .sign-up-container {
+
+#containerFind .sign-up-container {
   left: 0;
-  width: 50%;
+  width: 100%;
   opacity: 0;
   z-index: 1;
 }
 
-#container.container.right-panel-active .sign-up-container {
-  transform: translateX(100%);
+#containerFind.container.right-panel-active .sign-up-container {
+  /*transform: translateX(100%);*/
   opacity: 1;
   z-index: 5;
   animation: show 0.6s;
@@ -143,7 +128,7 @@ body {
   }
 }
 
-#container .overlay-container {
+#containerFind .overlay-container {
   position: absolute;
   top: 0;
   left: 50%;
@@ -154,11 +139,7 @@ body {
   z-index: 100;
 }
 
-#container.container.right-panel-active .overlay-container{
-  transform: translateX(-100%);
-}
-
-#container .overlay {
+#containerFind .overlay {
   background: #FF416C;
   background: -webkit-linear-gradient(to right, #6610F2, #6F42C1);
   background: linear-gradient(to right, #6610F2, #6F42C1);
@@ -174,11 +155,11 @@ body {
   transition: transform 0.6s ease-in-out;
 }
 
-#container.container.right-panel-active .overlay {
+#containerFind.container.right-panel-active .overlay {
     transform: translateX(50%);
 }
 
-#container .overlay-panel {
+#containerFind .overlay-panel {
   position: absolute;
   display: flex;
   align-items: center;
@@ -193,28 +174,8 @@ body {
   transition: transform 0.6s ease-in-out;
 }
 
-#container .overlay-left {
-  transform: translateX(-20%);
-}
 
-#container.container.right-panel-active .overlay-left {
-  transform: translateX(0);
-}
-
-#container .overlay-right {
-  right: 0;
-  transform: translateX(0);
-}
-
-#container.container.right-panel-active .overlay-right {
-  transform: translateX(20%);
-}
-
-#container .social-container {
-  margin: 20px 0;
-}
-
-#container .social-container a {
+#containerFind .social-container a {
   border: 1px solid #DDDDDD;
   border-radius: 50%;
   display: inline-flex;
@@ -224,28 +185,3 @@ body {
   height: 40px;
   width: 40px;
 }
-
-/*footer {
-    background-color: #222;
-    color: #fff;
-    font-size: 14px;
-    bottom: 0;
-    position: fixed;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 999;
-}
-
-footer p {
-    margin: 10px 0;
-}
-
-footer i {
-    color: red;
-}
-
-footer a {
-    color: #3c97bf;
-    text-decoration: none;
-}*/
