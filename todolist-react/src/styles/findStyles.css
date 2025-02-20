@@ -6,6 +6,11 @@
   margin: 0;
 }
 
+#containerFind .nav-item {
+  font-weight: bold;
+  cursor: pointer;
+}
+
 #containerFind h2 {
   text-align: center;
 }
@@ -84,7 +89,7 @@
   width: 768px;
   max-width: 100%;
   min-height: 580px;
-  margin-top: 180px;
+  margin-top: 100px;
 }
 
 #containerFind .form-container {

@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/Page';
 import Login from '../pages/member/login/Page';
 import Find from '../pages/member/find/Page';
+import UpdatePw from '../pages/member/updatePw/Page';
 
 
 const TodoRoutes = () => {
@@ -13,6 +14,7 @@ const TodoRoutes = () => {
       <Route path="member">
           <Route path="login" element={<Login />} />  {/* /member/login */}          
           <Route path="find" element={<Find />} />  {/* /member/find */}  
+          <Route path="updatePw" element={<UpdatePw />} />  {/* /member/updatePw */}  
       </Route>
 
     </Routes>
