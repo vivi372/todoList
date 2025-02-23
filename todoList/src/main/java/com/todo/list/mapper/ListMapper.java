@@ -25,7 +25,10 @@ public interface ListMapper {
 	public int todoUpdate(ListDTO dto);
 	
 	//todo 중요도 하나씩 뒤로 미루기
-	public int todoInc(Map<String, String> map);
+	public int todoPush(Map<String, String> map);
+	
+	//todo 중요도 하나씩 뒤로 당기기
+	public int todoPull(Map<String, String> map);
 	
 	//todo 삭제
 	public int todoDelete(ListDTO dto);

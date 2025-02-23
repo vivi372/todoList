@@ -37,10 +37,17 @@
 	</update>
 	
 	<!--todo 중요도 하나씩 뒤로 미루기-->
-	<update id="todoInc" parameterType="hashMap">		
+	<update id="todoPush" parameterType="hashMap">		
 			UPDATE TODOLIST			
 			SET IMPOR = IMPOR + 1			
 			WHERE IMPOR <![CDATA[>=]]> #{impor} AND ID = #{id}
+	</update>
+	
+	<!--todo 중요도 하나씩 앞으로 당기기-->
+	<update id="todoPull" parameterType="hashMap">		
+			UPDATE TODOLIST			
+			SET IMPOR = IMPOR - 1			
+			WHERE IMPOR <![CDATA[>]]> #{impor} AND ID = #{id}
 	</update>
 	
 	<!--todo 삭제-->

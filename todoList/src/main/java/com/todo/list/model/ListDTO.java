@@ -16,6 +16,8 @@ public class ListDTO {
 	private String regDate;
 	//중요도
 	private String impor;
+	//이전 중요도
+	private String beforeimpor;
 	//시작 기간
 	private String startDate;
 	//종료 기간
