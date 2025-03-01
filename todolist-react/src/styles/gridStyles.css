@@ -1,0 +1,65 @@
+
+
+.todo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.todo-card {
+  width: 350px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.todo-header {
+  background-color: #a385e0;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.todo-title {
+  color: white;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.completed .text-completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.delete-icon {
+  margin-left: auto;
+}
+
+.new-task-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.new-task-input {
+  flex: 1;
+  margin-right: 8px;
+}
+
+.new-task-button {
+  background-color: #a385e0;
+  color: white;
+  text-transform: none;
+  font-weight: bold;
+  border-radius: 20px;
+}
