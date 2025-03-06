@@ -11,9 +11,6 @@ function Page() {
         <div className="col-md-6">
           <TodoGrid />
         </div>
-        <div className="col-md-6">
-          <TodoGrid />
-        </div>
       </div>      
     </Container>
   );

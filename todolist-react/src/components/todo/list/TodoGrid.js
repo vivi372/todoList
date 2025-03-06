@@ -1,34 +1,46 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Card, CardContent, Typography, IconButton, TextField, Button, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import MenuIcon from "@mui/icons-material/Menu";
-
+import {todoList,todoTogle,todoDelete} from '../../../api/todo/todoApi';
+import {getSession} from '../../../utils/session';
 import '../../../styles/gridStyles.css';
 
 function TodoGrid() {
   const [tasks, setTasks] = useState([
-    { id: 1, text: "Styleguide creation", completed: false },
-    { id: 2, text: "Send wireframes", completed: true },
-    { id: 3, text: "Readability About page", completed: false },
-    { id: 4, text: "Check color contrast", completed: false },
+    { seqNo: 1, todoName: "Styleguide creation", compleYn: 'Y', impor: 1 },
+    { seqNo: 2, todoName: "Send wireframes", compleYn: 'N', impor : 2 },    
   ]);
-  const [newTask, setNewTask] = useState("");
+  const [id, setId] = useState("");
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(task => task.id === id ? { ...task, completed: !task.completed } : task));
-  };
+  //컴포넌트 렌더링시 투두 리스트 가져오기
+  //맨 처음에만 실행
+ useEffect(()=>{
+    //아이디 가져오기
+    const user = getSession();
+    console.log(user.id);
+    setId(user.id);
+  },[]);
 
-  const addTask = () => {
-    if (newTask.trim() !== "") {
-      setTasks([...tasks, { id: Date.now(), text: newTask, completed: false }]);
-      setNewTask("");
+  useEffect(() => {
+    // id가 변경된 후 task 가져오기
+    if (id !== "") {
+        console.log(id);
+        setTasks(todoList(id));
     }
+  }, [id]);
+
+
+  const toggleTask = (seqNo,compleYn) => {
+    todoTogle(seqNo,compleYn);
+    //setTasks(todoList(id));
   };
 
-  const removeTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const removeTask = (seqNo) => {
+    todoDelete(seqNo);
+    //setTasks(todoList(id));
   };
 
   return ( 
@@ -41,14 +53,14 @@ function TodoGrid() {
       </div>
       <CardContent className="todo-list">
         <List>
-          {tasks.map((task) => (
-            <ListItem key={task.id} className={`task-item ${task.completed ? "completed" : ""}`}>
-              <ListItemIcon onClick={() => toggleTask(task.id)} className="icon">
-                {task.completed ? <RadioButtonCheckedIcon color="secondary" /> : <RadioButtonUncheckedIcon color="disabled" />}
+          {tasks.map((task) => ( 
+            <ListItem key={task.id} className={`task-item ${task.compleYn === 'Y' ? "completed" : ""}`}>
+              <ListItemIcon onClick={() => toggleTask(task.seqNo,task.compleYn)} className="icon">
+                {task.compleYn === 'Y' ? <RadioButtonCheckedIcon color="secondary" /> : <RadioButtonUncheckedIcon color="disabled" />}
               </ListItemIcon>
-              <ListItemText primary={task.text} className={task.completed ? "text-completed" : ""} />
-              {task.completed && (
-                <IconButton onClick={() => removeTask(task.id)} className="delete-icon">
+              <ListItemText primary={task.todoName} className={task.compleYn === 'Y' ? "text-completed" : ""} />
+              {task.compleYn === 'Y' && (
+                <IconButton onClick={() => removeTask(task.seqNo)} className="delete-icon">
                   <DeleteIcon color="disabled" />
                 </IconButton>
               )}
