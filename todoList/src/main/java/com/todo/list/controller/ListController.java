@@ -44,7 +44,7 @@ public class ListController {
 	public ResponseEntity<Integer> comple(@RequestBody ListDTO dto) {
 		log.info(dto.toString());		
 		
-		return new ResponseEntity<>(service.todoComple(dto.getImpor(),dto.getId()),HttpStatus.OK);		
+		return new ResponseEntity<>(service.todoComple(dto.getCompleYn(),dto.getSeqNo()),HttpStatus.OK);		
 		
 	}
 	

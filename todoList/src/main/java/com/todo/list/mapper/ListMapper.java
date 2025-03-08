@@ -31,7 +31,7 @@ public interface ListMapper {
 	public int todoPull(Map<String, String> map);
 	
 	//todo 삭제
-	public int todoDelete(ListDTO dto);
+	public int todoDelete(int seqNo);
 	
 
 
