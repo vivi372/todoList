@@ -6,8 +6,24 @@ export const todoList = async (id) => {
         id : id,        
     };
     try {
-        return await postRequest("/todo/list", param);
+        const result = await postRequest("/todo/list", param);
+        let tasks = []; 
+        tasks.push(...result.map((item)=>{
+            const task = {
+                seqNo : item.seqNo,
+                todoName : item.todoName,
+                compleYn : item.compleYn,
+                impor : item.impor,
+            }
+            return task;
+        }));
+        
+        console.log("todoApi.todoList : ");
+        console.log(tasks);
+        tasks.map((i)=>console.log(i));
+        return tasks;
     } catch (error) {
+        console(error);
         return null;
     }
 };

@@ -15,6 +15,12 @@ function TodoGrid() {
   ]);
   const [id, setId] = useState("");
 
+  //투두리스트 세팅하는 함수
+  const setTodoList = async (id)=>{
+    const result = await todoList(id);
+    setTasks(result);
+  }
+
   //컴포넌트 렌더링시 투두 리스트 가져오기
   //맨 처음에만 실행
  useEffect(()=>{
@@ -27,20 +33,19 @@ function TodoGrid() {
   useEffect(() => {
     // id가 변경된 후 task 가져오기
     if (id !== "") {
-        console.log(id);
-        setTasks(todoList(id));
+        //console.log(id);
+        setTodoList(id);
     }
   }, [id]);
 
-
-  const toggleTask = (seqNo,compleYn) => {
-    todoTogle(seqNo,compleYn);
-    //setTasks(todoList(id));
+  const toggleTask = async (seqNo,compleYn) => {
+    await todoTogle(seqNo,compleYn);
+    setTodoList(id);
   };
 
-  const removeTask = (seqNo) => {
-    todoDelete(seqNo);
-    //setTasks(todoList(id));
+  const removeTask = async (seqNo) => {
+    await todoDelete(seqNo);
+    setTodoList(id);
   };
 
   return ( 
