@@ -3,15 +3,23 @@
   justify-content: center;
   align-items: center;
   margin-top: 50px; /* 컨테이너 여백 추가 */
+  
 }
 
 .todo-card {
-  width: 350px;
+  position: relative; /* 버튼을 카드 하단에 고정하기 위해 */
+  width: 400px;
   min-height: 400px; /* 리스트 길이가 아래로 늘어나도록 설정 */
   background-color: white;
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding-bottom: 50px; /* 아래 버튼 공간 확보 */
+  overflow: visible !important; /* 카드 밖으로 나가는 요소가 잘리지 않도록 */
+  transition: width 0.4s ease-in-out !important; /* 부드러운 확장 효과 */
+}
+
+.todo-card.expanded {
+  width : 800px;
 }
 
 .todo-header {
@@ -44,14 +52,13 @@
   margin-left: auto;
 }
 
-/* 추가 버튼을 카드 내부 하단 중앙에 동그랗게 배치 */
 .add-task-button {
   position: absolute;
-  bottom: 15px;
+  bottom: -30px; /* 카드 하단과 겹치도록 설정 */
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: #a385e0;
   color: white;
   border-radius: 50%;
@@ -63,8 +70,47 @@
   font-size: 24px;
   border: none;
   outline: none;
+  transition: background-color 0.3s ease;
 }
 
 .add-task-button:hover {
   background-color: #8b6ec5;
+}
+
+/* 입력 폼이 나타날 때 애니메이션 효과 */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.task-input-container {
+  display: none !important;
+  overflow: hidden;
+  transition: width 0.4s ease-in-out;
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* 입력 폼 표시 */
+.task-input-container.show {
+  display: block !important;
+  animation: slideIn 0.4s ease-out;
+}
+
+.task-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.col-md-6 {
+  width: 50% !important;
 }
