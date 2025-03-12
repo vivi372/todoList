@@ -4,6 +4,7 @@ import NaverBar from './components/NaverBar';
 import Breadcrumbs from './components/Breadcrumbs';
 import Footer from './components/Footer';
 import TodoRoutes from './routes/TodoRoutes';
+import './styles/common.css';
 
 function App() {
   return (

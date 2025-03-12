@@ -6,6 +6,7 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import {Menu,Add,Remove} from "@mui/icons-material";
 import {todoList,todoTogle,todoDelete} from '../../../api/todo/todoApi';
 import {getSession} from '../../../utils/session';
+import DatePickerButton from '../../datePicker/DatePickerButton'
 import '../../../styles/gridStyles.css';
 
 function TodoGrid() {
@@ -15,7 +16,7 @@ function TodoGrid() {
   ]);
   const [id, setId] = useState("");
   const [showInput, setShowInput] = useState(false); // 입력창 표시 여부
-  const [newTask, setNewTask] = useState(""); // 새로운 할 일 입력값
+  const [todoName, setTodoName] = useState(""); // 새로운 할 일 입력값
 
   //투두리스트 세팅하는 함수
   const setTodoList = async (id)=>{
@@ -62,10 +63,10 @@ function TodoGrid() {
         </IconButton>
         <Typography variant="h6" className="todo-title">Website todo</Typography>
       </div>
-      <CardContent className="todo-list">
-        <List className="row">
+      <CardContent className="todo-list row">
+        <List className={`${showInput ? "col-md-6" : "col-md-12"}`}>
           {tasks.map((task) => ( 
-            <ListItem key={task.id} className={`task-item ${task.compleYn === 'Y' ? "completed" : ""} ${showInput ? "col-md-6" : "col-md-12"}`}>
+            <ListItem key={task.id} className={`task-item ${task.compleYn === 'Y' ? "completed" : ""}`}>
               <ListItemIcon onClick={() => toggleTask(task.seqNo,task.compleYn)} className="icon">
                 {task.compleYn === 'Y' ? <RadioButtonCheckedIcon color="secondary" /> : <RadioButtonUncheckedIcon color="disabled" />}
               </ListItemIcon>
@@ -77,17 +78,12 @@ function TodoGrid() {
               )}
             </ListItem>
           ))}
-          {/* 오른쪽에서 확장되는 입력 폼 */}
-          <div className={`task-input-container ${showInput ? "col-md-6 show" : ""}`}>
-            <TextField
-              className="task-input"
-              variant="outlined"
-              placeholder="새로운 할 일 추가..."
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-            />
-          </div>
         </List>
+        {/* 오른쪽에서 확장되는 입력 폼 */}
+        <div className={`task-input-container ${showInput ? "col-md-6 show" : ""}`}>
+          <input type="text" placeholder="할일 목록 추가" onChange={(e)=>setTodoName(e.target.value)}/>
+          <DatePickerButton />
+        </div>
       </CardContent>
 
       {/* 추가 버튼 */}
