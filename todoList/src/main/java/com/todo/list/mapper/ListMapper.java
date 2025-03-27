@@ -19,7 +19,7 @@ public interface ListMapper {
 	public int todoWrite(ListDTO dto);
 	
 	//todo 완료 또는 완료 취소
-	public int todoComple(Map<String, String> map);
+	public int todoComple(ListDTO dto);
 	
 	//todo 수정
 	public int todoUpdate(ListDTO dto);

@@ -44,21 +44,16 @@ public class ListServiceImpl implements ListService {
 	
 	//todo 완료 또는 완료 취소
 	@Override
-	public int todoComple(String compleYn,String seqNo) {
-		//mapper에 넣을 MAP 생성
-		Map<String, String> map = new HashMap<>();
+	public int todoComple(ListDTO dto) {
 		
 		//들어온 완료 여부의 반대로 입력
-		if(compleYn.equals("Y")) {
-			compleYn = "N";
+		if(dto.getCompleYn().equals("Y")) {
+			dto.setCompleYn("N");
 		} else {
-			compleYn = "Y";			
+			dto.setCompleYn("Y");	
 		}
 		
-		map.put("compleYn", compleYn);
-		map.put("seqNo", seqNo);
-		
-		return mapper.todoComple(map);
+		return mapper.todoComple(dto);
 	}
 	
 	//todo 수정

@@ -6,23 +6,36 @@
 <mapper namespace="com.todo.list.mapper.ListMapper">
     <!--todoList 데이터 가져오기-->
 	<select id="todoList" resultMap="listDTO" parameterType="com.todo.list.model.ListDTO">
-	  SELECT SEQNO,TODO_NAME,COMPLE_YN,IMPOR FROM TODOLIST WHERE ID = #{id} AND sysdate BETWEEN START_DATE AND END_DATE ORDER BY REG_DATE DESC
+	  SELECT SEQNO,TODO_NAME,COMPLE_YN,IMPOR FROM TODOLIST WHERE ID = #{id} AND sysdate BETWEEN START_DATE AND END_DATE ORDER BY IMPOR
 	</select>
 	
 	<!-- todo 등록하기 -->
 	<insert id="todoWrite" parameterType="com.todo.list.model.ListDTO">
-		<selectKey order="BEFORE" keyColumn="SEQNO" keyProperty="seqNo" resultType="int">
-			SELECT TODOLIST_SEQ.nextVal from dual
+		<selectKey order="BEFORE" keyColumn="SEQNO,IMPOR" keyProperty="seqNo,impor" resultType="map">
+			SELECT TODOLIST_SEQ.nextVal,MAX(IMPOR)+1 FROM TODOLIST WHERE ID=#{id}
 		</selectKey>
+
 		
 		INSERT INTO TODOLIST(SEQNO,TODO_NAME,TODO_MEMO,IMPOR,START_DATE,END_DATE,ID)
-		VALUES(#{seqNo},#{todoName},#{todoMemo},#{impor},#{startDate},#{endDate},#{id})
+		VALUES(#{seqNo},#{todoName},#{todoMemo},#{impor},sysDate,#{endDate},#{id})
 	
 	</insert>
 	
 	<!--todo 완료 또는 완료 취소-->
-	<update id="todoComple" parameterType="hashMap">		
-			UPDATE TODOLIST SET COMPLE_YN = #{compleYn} WHERE SEQNO = #{seqNo}	
+	<update id="todoComple" parameterType="com.todo.list.model.ListDTO">
+		<selectKey keyProperty="impor" order="BEFORE" resultType="String">
+			<choose>
+				<!--완료로 수정할때는 우선도에 빈값을 넣는다-->
+				<when test="compleYn == 'Y'">
+					SELECT '' FROM DUAL
+				</when>
+				<!--미완로 수정할때는 가장 낮은 우선도를 준다-->
+				<when test="compleYn == 'N'">
+					SELECT MAX(IMPOR)+1 FROM TODOLIST WHERE ID=#{id}
+				</when>
+			</choose>
+		</selectKey>		
+		UPDATE TODOLIST SET COMPLE_YN = #{compleYn} AND IMPOR = #{impor} WHERE SEQNO = #{seqNo}	
 	</update>
 	
 	<!--todo 수정-->
