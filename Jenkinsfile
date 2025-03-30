@@ -26,7 +26,7 @@ pipeline {
 
         stage('Build Spring Boot App') {
             steps {
-                dir('todoList') {
+                dir('todoList/todoList') {
                     sh './mvnw clean package -DskipTests'
                 }
             }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker build -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/Dockerfile todoList
+                    docker build -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/todoList/Dockerfile todoList/todoList
                     """
                 }
             }
