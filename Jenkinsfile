@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "venivivi/todolist_dockerhub"
+        DOCKER_IMAGE_REACT = "venivivi/todolist-react"
+        DOCKER_IMAGE_BACKEND = "venivivi/todolist"
         DOCKER_TAG = "latest"
         DOCKER_CREDENTIALS_ID = "todoList_dockerHub"
     }
@@ -10,7 +11,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/vivi372/todoList.git/'
+                git branch: 'main', url: 'https://github.com/vivi372/todoList.git'
             }
         }
 
@@ -31,21 +32,41 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build React Docker Image') {
             steps {
                 script {
                     sh """
-                    docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+                    docker build -t $DOCKER_IMAGE_REACT:$DOCKER_TAG -f todolist-react/Dockerfile todolist-react
                     """
                 }
             }
         }
 
-        stage('Push to Docker Hub') {
+        stage('Build Spring Boot Docker Image') {
+            steps {
+                script {
+                    sh """
+                    docker build -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/Dockerfile todoList
+                    """
+                }
+            }
+        }
+
+        stage('Push React to Docker Hub') {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
-                        sh "docker push $DOCKER_IMAGE:$DOCKER_TAG"
+                        sh "docker push $DOCKER_IMAGE_REACT:$DOCKER_TAG"
+                    }
+                }
+            }
+        }
+
+        stage('Push Spring Boot to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        sh "docker push $DOCKER_IMAGE_BACKEND:$DOCKER_TAG"
                     }
                 }
             }
@@ -57,9 +78,9 @@ pipeline {
                     sh """
                     ssh ubuntu@3.37.124.207 << EOF
                     cd /home/ubuntu/todoList-project
-                    docker-compose pull todoList todolist-react
-                    docker-compose down todoList todolist-react
-                    docker-compose up -d todoList todolist-react
+                    docker-compose pull todolist todolist-react
+                    docker-compose down todolist todolist-react
+                    docker-compose up -d todolist todolist-react
                     EOF
                     """
                 }
