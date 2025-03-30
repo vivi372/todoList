@@ -57,8 +57,9 @@ pipeline {
                     sh """
                     ssh ubuntu@3.37.124.207 << EOF
                     cd /home/ubuntu/todoList-project
-                    docker-compose pull
-                    docker-compose up -d
+                    docker-compose pull todoList todolist-react
+                    docker-compose down todoList todolist-react
+                    docker-compose up -d todoList todolist-react
                     EOF
                     """
                 }
