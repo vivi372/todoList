@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker build -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/todoList/Dockerfile todoList/todoList
+                    docker build -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/Dockerfile todoList
                     """
                 }
             }
