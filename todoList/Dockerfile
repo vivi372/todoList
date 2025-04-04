@@ -2,7 +2,7 @@
 FROM eclipse-temurin:17 AS build
 WORKDIR /app
 COPY . .
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # 실행 환경 설정
 FROM eclipse-temurin:17
