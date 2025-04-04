@@ -28,7 +28,7 @@ pipeline {
         stage('Build Spring Boot App') {
             steps {
                 dir('todoList/todoList') {
-                    sh './mvnw clean package -DskipTests'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
