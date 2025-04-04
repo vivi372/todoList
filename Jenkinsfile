@@ -5,7 +5,7 @@ pipeline {
         DOCKER_IMAGE_REACT = "venivivi/todolist-react"
         DOCKER_IMAGE_BACKEND = "venivivi/todolist"
         DOCKER_TAG = "latest"
-        DOCKER_CREDENTIALS_ID = "todoList_dockerHub"
+        DOCKER_CREDENTIALS_ID = "docker-hub-credentials"
     }
 
     stages {
@@ -76,8 +76,8 @@ pipeline {
             steps {
                 sshagent(['Server_SSH_Access']) {
                     sh """
-                    ssh ubuntu@3.37.124.207 << EOF
-                    cd /home/ubuntu/todoList-project
+                    ssh ubuntu@13.125.225.120 << EOF
+                    cd /home/todolist/todolist-project
                     docker-compose pull todolist todolist-react
                     docker-compose down todolist todolist-react
                     docker-compose up -d todolist todolist-react
