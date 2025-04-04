@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        CI = 'false'
         DOCKER_IMAGE_REACT = "venivivi/todolist-react"
         DOCKER_IMAGE_BACKEND = "venivivi/todolist"
         DOCKER_TAG = "latest"
