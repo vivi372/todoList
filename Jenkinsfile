@@ -79,7 +79,7 @@ pipeline {
 
         stage('Deploy to Server') {
             steps {
-                sshagent(['Server_SSH_Access']) {
+                sshagent(['server-ssh-access']) {
                     sh """
                     ssh ubuntu@13.125.225.120 << EOF
                     cd /home/todolist/todolist-project
