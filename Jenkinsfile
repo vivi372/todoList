@@ -56,7 +56,7 @@ pipeline {
         stage('Push React to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                    docker.withRegistry('https://index.docker.io/v1/', docker-hub-credentials) {
                         sh "docker push $DOCKER_IMAGE_REACT:$DOCKER_TAG"
                     }
                 }
@@ -66,7 +66,7 @@ pipeline {
         stage('Push Spring Boot to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                    docker.withRegistry('https://index.docker.io/v1/', docker-hub-credentials) {
                         sh "docker push $DOCKER_IMAGE_BACKEND:$DOCKER_TAG"
                     }
                 }
