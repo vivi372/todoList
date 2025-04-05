@@ -55,9 +55,13 @@ pipeline {
 
         stage('Push React to Docker Hub') {
             steps {
-                script {
+                 script {
+                    echo '🏗️ 시작: React 이미지 Docker Hub에 푸시 준비 중...'
+        
                     docker.withRegistry('https://index.docker.io/v1/', docker-hub-credentials) {
-                        sh "docker push $DOCKER_IMAGE_REACT:$DOCKER_TAG"
+                        echo '🔐 Docker Hub 로그인 성공'
+                        docker.image('venivivi/todolist:latest').push()
+                        echo '✅ React 이미지 푸시 성공'
                     }
                 }
             }
