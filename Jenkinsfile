@@ -60,7 +60,7 @@ pipeline {
         
                     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
                         echo '🔐 Docker Hub 로그인 성공'
-                        docker.image('venivivi/todolist:latest').push()
+                        sh "docker push $DOCKER_IMAGE_REACT:$DOCKER_TAG"
                         echo '✅ React 이미지 푸시 성공'
                     }
                 }
