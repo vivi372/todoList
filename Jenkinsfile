@@ -80,14 +80,14 @@ pipeline {
         stage('Deploy to Server') {
             steps {
                 sshagent(['server-ssh-access']) {
-                    sh """
-                    ssh todolist@13.125.225.120 << EOF
-                    cd /home/todolist/todolist-project
-                    docker-compose pull todolist todolist-react
-                    docker-compose down todolist todolist-react
-                    docker-compose up -d todolist todolist-react
-                    EOF
-                    """
+sh '''
+ssh todolist@13.125.225.120 <<EOF
+cd /home/todolist/todolist-project
+docker-compose pull todolist todolist-react
+docker-compose down todolist todolist-react
+docker-compose up -d todolist todolist-react
+EOF
+'''
                 }
             }
         }
