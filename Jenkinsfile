@@ -81,7 +81,7 @@ pipeline {
             steps {
                 sshagent(['server-ssh-access']) {
                     sh """
-                    ssh ubuntu@13.125.225.120 << EOF
+                    ssh todolist@13.125.225.120 << EOF
                     cd /home/todolist/todolist-project
                     docker-compose pull todolist todolist-react
                     docker-compose down todolist todolist-react
