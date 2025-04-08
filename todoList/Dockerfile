@@ -12,6 +12,9 @@ RUN whoami
 # 이후 나머지 전체 복사
 COPY . .
 
+# ✅ 실제로 실행 권한 부여
+RUN chmod +x mvnw
+
 # 패키지 빌드
 RUN ./mvnw clean package -DskipTests
 
