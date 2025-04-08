@@ -1,25 +1,21 @@
-# 1단계: 의존성 캐시 레이어 분리
+# 빌드 환경
 FROM eclipse-temurin:17 AS build
-
 WORKDIR /app
 
-# 종속성 설치를 위한 파일만 먼저 복사 (캐시 최적화 핵심!)
+# 먼저 mvnw와 .mvn 복사하고 실행 권한 부여
 COPY mvnw .
 COPY .mvn .mvn
-COPY pom.xml .
+RUN chmod +x mvnw
 
-# 종속성 캐시 저장
-RUN chmod +x ./mvnw && ./mvnw dependency:go-offline
-
-# 전체 프로젝트 복사 후 빌드
+# 이후 나머지 전체 복사
 COPY . .
+
+# 패키지 빌드
 RUN ./mvnw clean package -DskipTests
 
-# 2단계: 실행 이미지
+# 실행 환경
 FROM eclipse-temurin:17
 WORKDIR /app
-
 COPY --from=build /app/target/*.jar app.jar
-
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
