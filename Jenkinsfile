@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker build --no-cache -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/Dockerfile todoList
+                    docker build -t $DOCKER_IMAGE_BACKEND:$DOCKER_TAG -f todoList/Dockerfile todoList
                     """
                 }
             }
