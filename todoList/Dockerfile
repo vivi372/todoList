@@ -6,6 +6,7 @@ WORKDIR /app
 COPY mvnw .
 COPY .mvn .mvn
 RUN chmod +x mvnw
+RUN ls -l mvnw
 
 # 이후 나머지 전체 복사
 COPY . .
