@@ -3,9 +3,10 @@ import { Card, CardContent, Typography, IconButton, TextField, Button, List, Lis
 import DeleteIcon from "@mui/icons-material/Delete";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import MenuIcon from "@mui/icons-material/Menu";
+import {Menu,Add,Remove} from "@mui/icons-material";
 import {todoList,todoTogle,todoDelete} from '../../../api/todo/todoApi';
 import {getSession} from '../../../utils/session';
+import DatePickerButton from '../../datePicker/DatePickerButton'
 import '../../../styles/gridStyles.css';
 
 function TodoGrid() {
@@ -14,6 +15,8 @@ function TodoGrid() {
     { seqNo: 2, todoName: "Send wireframes", compleYn: 'N', impor : 2 },    
   ]);
   const [id, setId] = useState("");
+  const [showInput, setShowInput] = useState(false); // 입력창 표시 여부
+  const [todoName, setTodoName] = useState(""); // 새로운 할 일 입력값
 
   //투두리스트 세팅하는 함수
   const setTodoList = async (id)=>{
@@ -48,16 +51,20 @@ function TodoGrid() {
     setTodoList(id);
   };
 
+  const showInputToggle = () => {
+    setShowInput(!showInput);
+  }
+
   return ( 
-    <Card className="todo-card">
+    <Card className={`todo-card ${showInput ? "expanded" : ""}`}>
       <div className="todo-header">
         <IconButton>
-          <MenuIcon style={{ color: "white" }} />
+          <Menu style={{ color: "white" }} />
         </IconButton>
         <Typography variant="h6" className="todo-title">Website todo</Typography>
       </div>
-      <CardContent className="todo-list">
-        <List>
+      <CardContent className="todo-list row">
+        <List className={`${showInput ? "col-md-6" : "col-md-12"}`}>
           {tasks.map((task) => ( 
             <ListItem key={task.id} className={`task-item ${task.compleYn === 'Y' ? "completed" : ""}`}>
               <ListItemIcon onClick={() => toggleTask(task.seqNo,task.compleYn)} className="icon">
@@ -72,8 +79,17 @@ function TodoGrid() {
             </ListItem>
           ))}
         </List>
+        {/* 오른쪽에서 확장되는 입력 폼 */}
+        <div className={`task-input-container ${showInput ? "col-md-6 show" : ""}`}>
+          <input type="text" placeholder="할일 목록 추가" onChange={(e)=>setTodoName(e.target.value)}/>
+          <DatePickerButton />
+        </div>
       </CardContent>
 
+      {/* 추가 버튼 */}
+      <button className="add-task-button" onClick={showInputToggle}>
+        {!showInput? <Add/> : <Remove/>}
+      </button>
 
     </Card>
 
