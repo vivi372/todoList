@@ -1,0 +1,19 @@
+# Git 관련
+.git
+.gitignore
+
+# IDE 설정
+.idea
+.vscode
+
+# 빌드 산출물
+build/
+
+# node_modules는 컨테이너에서 설치함
+node_modules/
+
+# 로그 파일
+*.log
+
+# 환경 파일
+.env

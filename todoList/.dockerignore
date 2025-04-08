@@ -1,0 +1,21 @@
+# Git 관련
+.git
+.gitignore
+
+# IDE 설정
+.idea
+*.iml
+*.vscode
+
+# 빌드 산출물
+target/
+
+# 로그 파일
+*.log
+
+# OS/툴 잡파일
+.DS_Store
+Thumbs.db
+
+# 환경 파일 (보안상)
+.env

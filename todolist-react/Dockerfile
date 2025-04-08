@@ -1,13 +1,22 @@
-# Node.js 환경에서 빌드
+# 빌드 스테이지
 FROM node:18 AS build
 WORKDIR /app
-COPY package.json package-lock.json ./
-RUN npm install
+
+# 1. package 파일만 먼저 복사
+COPY package*.json ./
+
+# 2. 의존성 설치 (캐시 가능)
+RUN npm ci
+
+# 3. 소스 복사
 COPY . .
+
+# 4. 빌드
 RUN npm run build
 
-# Nginx를 사용해 정적 파일 제공
+# 실행 스테이지
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 3000
 CMD ["nginx", "-g", "daemon off;"]
+
