@@ -1,0 +1,22 @@
+.custom-datepicker {
+    border-radius: 12px; /* 모서리를 둥글게 */
+    border: 1px solid #ddd;
+    padding: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 살짝 그림자 */
+  }
+  
+  .custom-datepicker .react-datepicker__header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    background-color: #f8f9fa;
+  }
+  
+  .custom-datepicker .react-datepicker__day {
+    border-radius: 6px; /* 날짜 칸도 둥글게 */
+  }
+  
+  .custom-datepicker .react-datepicker__day:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
