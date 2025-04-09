@@ -21,6 +21,7 @@ RUN ./mvnw clean package -DskipTests
 # 실행 환경
 FROM eclipse-temurin:17
 WORKDIR /app
+ENV SPRING_PROFILES_ACTIVE=prod
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
