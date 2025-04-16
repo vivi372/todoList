@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.todo.list.mapper.ListMapper">
+    <!--todoList 데이터 가져오기-->
+	<select id="todoList" resultMap="listDTO" parameterType="com.todo.list.model.ListDTO">
+	  SELECT SEQNO,TODO_NAME,COMPLE_YN,IMPOR FROM TODOLIST WHERE ID = #{id} AND sysdate BETWEEN START_DATE AND END_DATE ORDER BY IMPOR
+	</select>
+	
+	<!-- todo 등록하기 -->
+	<insert id="todoWrite" parameterType="com.todo.list.model.ListDTO">
+		<selectKey order="BEFORE" keyColumn="SEQNO,IMPOR" keyProperty="seqNo,impor" resultType="map">
+			SELECT TODOLIST_SEQ.nextVal,MAX(IMPOR)+1 FROM TODOLIST WHERE ID=#{id}
+		</selectKey>
+
+		
+		INSERT INTO TODOLIST(SEQNO,TODO_NAME,TODO_MEMO,IMPOR,START_DATE,END_DATE,ID)
+		VALUES(#{seqNo},#{todoName},#{todoMemo},#{impor},sysDate,#{endDate},#{id})
+	
+	</insert>
+	
+	<!--todo 완료 또는 완료 취소-->
+	<update id="todoComple" parameterType="com.todo.list.model.ListDTO">
+		<selectKey keyProperty="impor" order="BEFORE" resultType="String">
+			<choose>
+				<!--완료로 수정할때는 우선도에 빈값을 넣는다-->
+				<when test="compleYn == 'Y'">
+					SELECT '' FROM DUAL
+				</when>
+				<!--미완로 수정할때는 가장 낮은 우선도를 준다-->
+				<when test="compleYn == 'N'">
+					SELECT MAX(IMPOR)+1 FROM TODOLIST WHERE ID=#{id}
+				</when>
+			</choose>
+		</selectKey>		
+		UPDATE TODOLIST SET COMPLE_YN = #{compleYn} AND IMPOR = #{impor} WHERE SEQNO = #{seqNo}	
+	</update>
+	
+	<!--todo 수정-->
+	<update id="todoUpdate" parameterType="com.todo.list.model.ListDTO">		
+			UPDATE 
+			TODOLIST SET TODO_NAME = #{todoName} , 
+			TODO_MEMO = #{todoMemo} ,
+			IMPOR = #{impor} , 
+			START_DATE = #{startDate} , 
+			END_DATE = #{endDate} , 
+			WHERE SEQNO = #{seqNo}	
+	</update>
+	
+	<!--todo 중요도 하나씩 뒤로 미루기-->
+	<update id="todoPush" parameterType="hashMap">		
+			UPDATE TODOLIST			
+			SET IMPOR = IMPOR + 1			
+			WHERE IMPOR <![CDATA[>=]]> #{impor} AND ID = #{id}
+	</update>
+	
+	<!--todo 중요도 하나씩 앞으로 당기기-->
+	<update id="todoPull" parameterType="hashMap">		
+			UPDATE TODOLIST			
+			SET IMPOR = IMPOR - 1			
+			WHERE IMPOR <![CDATA[>]]> #{impor} AND ID = #{id}
+	</update>
+	
+	<!--todo 삭제-->
+	<delete id="todoDelete" parameterType="int">
+		DELETE FROM TODOLIST WHERE SEQNO = #{seqNo}
+	</delete>
+    
+    
+	<resultMap type="com.todo.list.model.ListDTO" id="listDTO">
+	  <!-- 1:1로 DTO의 멤버변수를 매핑-->
+	  <result column="SEQNO" property="seqNo"/>
+	  <result column="TODO_NAME" property="todoName"/>
+	  <result column="TODO_MEMO" property="todoMemo"/>
+	  <result column="COMPLE_YN" property="compleYn"/>
+	  <result column="REG_DATE" property="regDate"/>
+	  <result column="IMPOR" property="impor"/>
+	  <result column="START_DATE" property="startDate"/>
+	  <result column="END_DATE" property="endDate"/>
+	  <result column="ID" property="id"/>
+	</resultMap>
+</mapper>

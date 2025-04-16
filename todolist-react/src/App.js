@@ -4,6 +4,7 @@ import NaverBar from './components/NaverBar';
 import Breadcrumbs from './components/Breadcrumbs';
 import Footer from './components/Footer';
 import TodoRoutes from './routes/TodoRoutes';
+import './styles/common.css';
 
 function App() {
   return (
@@ -14,9 +15,13 @@ function App() {
       <main className='container'>
         <TodoRoutes />
       </main>
-      <Footer />
+      <Footer />      
+      <a href="#" className="scroll-top">
+          <i className="lni lni-chevron-up"></i>
+      </a>
     </Router>
   );
+
 }
 
 export default App;
